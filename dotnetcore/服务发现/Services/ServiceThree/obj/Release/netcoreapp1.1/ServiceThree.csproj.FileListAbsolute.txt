@@ -1,0 +1,11 @@
+E:\microservice\dotnetcore\ServiceOne\ServiceOne\ServiceThree\bin\Release\netcoreapp1.1\ServiceThree.deps.json
+E:\microservice\dotnetcore\ServiceOne\ServiceOne\ServiceThree\bin\Release\netcoreapp1.1\ServiceThree.runtimeconfig.json
+E:\microservice\dotnetcore\ServiceOne\ServiceOne\ServiceThree\bin\Release\netcoreapp1.1\ServiceThree.runtimeconfig.dev.json
+E:\microservice\dotnetcore\ServiceOne\ServiceOne\ServiceThree\bin\Release\netcoreapp1.1\ServiceThree.dll
+E:\microservice\dotnetcore\ServiceOne\ServiceOne\ServiceThree\bin\Release\netcoreapp1.1\ServiceThree.pdb
+E:\microservice\dotnetcore\ServiceOne\ServiceOne\ServiceThree\obj\Release\netcoreapp1.1\ServiceThree.csprojResolveAssemblyReference.cache
+E:\microservice\dotnetcore\ServiceOne\ServiceOne\ServiceThree\obj\Release\netcoreapp1.1\ServiceThree.csproj.CoreCompileInputs.cache
+E:\microservice\dotnetcore\ServiceOne\ServiceOne\ServiceThree\obj\Release\netcoreapp1.1\ServiceThree.AssemblyInfoInputs.cache
+E:\microservice\dotnetcore\ServiceOne\ServiceOne\ServiceThree\obj\Release\netcoreapp1.1\ServiceThree.AssemblyInfo.cs
+E:\microservice\dotnetcore\ServiceOne\ServiceOne\ServiceThree\obj\Release\netcoreapp1.1\ServiceThree.dll
+E:\microservice\dotnetcore\ServiceOne\ServiceOne\ServiceThree\obj\Release\netcoreapp1.1\ServiceThree.pdb
