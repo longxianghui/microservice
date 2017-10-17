@@ -3,8 +3,8 @@ package com.leo.models;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-//@Component
-//@ConfigurationProperties()
+@Component
+@ConfigurationProperties()
 public class Demo {
     public String getName() {
         return name;

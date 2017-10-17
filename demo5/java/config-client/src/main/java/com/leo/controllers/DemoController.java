@@ -8,18 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-//@EnableConfigurationProperties(Demo.class)
 public class DemoController {
-
-//    @Autowired
-//    private Demo demo;
-    @Value("${name}")
-    private String name;
-
-    @RequestMapping("hello")
-    public String Hello() {
-
-        return this.name;
-
+    @Autowired
+    private Demo demo;
+    @RequestMapping("demo")
+    public Demo demo() {
+        return demo;
     }
 }
