@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Steeltoe.Discovery.Client;
 using Steeltoe.Extensions.Configuration;
 
 namespace ConfigClient1
@@ -30,6 +31,7 @@ namespace ConfigClient1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddConfigServer(Configuration);
+            services.AddDiscoveryClient(Configuration);
             // Add framework services.
             services.AddMvc();
             services.Configure<Demo>(Configuration);
@@ -42,6 +44,7 @@ namespace ConfigClient1
             loggerFactory.AddDebug();
 
             app.UseMvc();
+            app.UseDiscoveryClient();
         }
     }
 }

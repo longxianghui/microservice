@@ -20,6 +20,7 @@ namespace ConfigClient1.Controllers
             _config = config;
             _configDemo = configDemo;
         }
+
         // GET api/values
         [HttpGet]
         public Demo Get()
@@ -35,6 +36,11 @@ namespace ConfigClient1.Controllers
             return demo;
         }
 
-    
+        [HttpGet("/reload")]
+        public string Reload()
+        {
+            _config?.Reload();
+            return "reload";
+        }
     }
 }
