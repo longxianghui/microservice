@@ -40,7 +40,7 @@ namespace ConfigClient1.Controllers
         public string Reload()
         {
             _config?.Reload();
-            return "reload";
+            return _config?["name"];
         }
     }
 }

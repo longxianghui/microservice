@@ -18,7 +18,7 @@ namespace ConfigClient1
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .UseApplicationInsights()
-                .UseUrls("http://*:5102")
+                .UseUrls("http://*:5105")
                 .Build();
 
             host.Run();
