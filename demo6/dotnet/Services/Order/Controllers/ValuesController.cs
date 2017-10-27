@@ -11,10 +11,11 @@ namespace Order.Controllers
     {
         // GET api/values
         [HttpGet]
-        public string Get()
+        public IActionResult Get()
         {
-            return "order";
+            return Ok("order");
         }
 
+      
     }
 }

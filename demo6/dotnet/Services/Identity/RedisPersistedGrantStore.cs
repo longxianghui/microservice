@@ -7,7 +7,7 @@ using IdentityServer4.Models;
 using IdentityServer4.Stores;
 using Microsoft.Extensions.Configuration;
 
-namespace IdentityServer
+namespace Identity
 {
     public class RedisPersistedGrantStore : IPersistedGrantStore
     {
