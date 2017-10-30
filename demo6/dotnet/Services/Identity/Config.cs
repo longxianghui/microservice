@@ -10,10 +10,12 @@ namespace Identity
     public class Config
     {
         private readonly IConfiguration _configuration;
+
         public Config(IConfiguration configuration)
         {
             _configuration = configuration;
         }
+
         // scopes define the resources in your system
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
@@ -30,7 +32,7 @@ namespace Identity
             {
                 new ApiResource("api1", "My API")
                 {
-                    ApiSecrets = { new Secret("secret".Sha256()) }
+                    ApiSecrets = {new Secret("secret".Sha256())}
                 }
             };
         }
@@ -46,12 +48,12 @@ namespace Identity
                 {
                     ClientId = "client",
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    AccessTokenLifetime=accessTokenLifetime,//默认过期时间
+                    AccessTokenLifetime = accessTokenLifetime, //默认过期时间
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "api1" }
+                    AllowedScopes = {"api1"}
                 },
                 // resource owner password grant client
                 new Client
@@ -63,12 +65,10 @@ namespace Identity
                     },
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     AllowOfflineAccess = true,
-                     AccessTokenLifetime=accessTokenLifetime,//默认过期时间
+                    AccessTokenLifetime = accessTokenLifetime, //默认过期时间
                     AllowedScopes =
                     {
-
                         "api1"
-
                     },
                     AccessTokenType = AccessTokenType.Reference
                 }

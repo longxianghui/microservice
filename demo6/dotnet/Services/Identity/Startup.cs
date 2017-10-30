@@ -51,6 +51,7 @@ namespace Identity
             }
 
             app.UseMvc();
+            app.UseIdentityServer();
             app.UseDiscoveryClient();
         }
     }

@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Pivotal.Discovery.Client;
-using IdentityServer4.AccessTokenValidation;
 
-namespace Order
+
+namespace User
 {
     public class Startup
     {
@@ -20,20 +20,6 @@ namespace Order
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDiscoveryClient(Configuration);
-            var discoveryClient = services.BuildServiceProvider().GetService<IDiscoveryClient>();
-            var handler =new DiscoveryHttpClientHandler(discoveryClient);
-            services.AddAuthorization();
-            services.AddAuthentication("Bearer")
-//                .AddIdentityServerAuthentication(x =>
-//                {
-//                    x.ApiName = "api1";
-//                    x.Authority = "http://identity";
-//                    x.ApiSecret = "secret";
-//                    x.RequireHttpsMetadata = false;
-//                    x.Handler = handler;
-//                }
-                    //)
-                ;
             services.AddMvc();
         }
 
@@ -44,7 +30,7 @@ namespace Order
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseAuthentication();
+
             app.UseMvc();
             app.UseDiscoveryClient();
         }

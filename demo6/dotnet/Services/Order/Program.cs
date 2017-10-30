@@ -19,6 +19,7 @@ namespace Order
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseUrls("http://*:8020")
                 .UseStartup<Startup>()
                 .Build();
     }
