@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Foundatio.Caching;
 using IdentityServer4.Stores;
+using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -33,13 +34,13 @@ namespace Identity
             services.AddMvc();
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
-                .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
                 .AddInMemoryPersistedGrants()
                 .AddInMemoryApiResources(config.GetApiResources())
                 .AddInMemoryClients(config.GetClients());
             services.AddSingleton(ConnectionMultiplexer.Connect(redisconnectionString));
             services.AddTransient<ICacheClient, RedisCacheClient>();
             services.AddSingleton<IPersistedGrantStore, RedisPersistedGrantStore>();
+            services.AddTransient<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
