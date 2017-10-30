@@ -21,18 +21,18 @@ namespace Order
         {
             services.AddDiscoveryClient(Configuration);
             var discoveryClient = services.BuildServiceProvider().GetService<IDiscoveryClient>();
-            var handler =new DiscoveryHttpClientHandler(discoveryClient);
+            var handler = new DiscoveryHttpClientHandler(discoveryClient);
             services.AddAuthorization();
             services.AddAuthentication("Bearer")
-//                .AddIdentityServerAuthentication(x =>
-//                {
-//                    x.ApiName = "api1";
-//                    x.Authority = "http://identity";
-//                    x.ApiSecret = "secret";
-//                    x.RequireHttpsMetadata = false;
-//                    x.Handler = handler;
-//                }
-                    //)
+                                .AddIdentityServerAuthentication(x =>
+                                {
+                                    x.ApiName = "api1";
+                                    x.Authority = "http://identity";
+                                    x.ApiSecret = "secret";
+                                    x.RequireHttpsMetadata = false;
+                                    x.JwtBackChannelHandler = handler;
+                                }
+                )
                 ;
             services.AddMvc();
         }
