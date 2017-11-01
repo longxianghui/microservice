@@ -1,9 +1,16 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Net.Http;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Pivotal.Discovery.Client;
 using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.WindowsAzure.Storage.Shared.Protocol;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Protocols;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 namespace Order
 {
@@ -22,18 +29,38 @@ namespace Order
             services.AddDiscoveryClient(Configuration);
             var discoveryClient = services.BuildServiceProvider().GetService<IDiscoveryClient>();
             var handler = new DiscoveryHttpClientHandler(discoveryClient);
+            var urls = discoveryClient.GetInstances("identity");
+
             services.AddAuthorization();
-            services.AddAuthentication("Bearer")
-                                .AddIdentityServerAuthentication(x =>
-                                {
-                                    x.ApiName = "api1";
-                                    x.Authority = "http://identity";
-                                    x.ApiSecret = "secret";
-                                    x.RequireHttpsMetadata = false;
-                                    x.JwtBackChannelHandler = handler;
-                                }
-                )
-                ;
+            services.AddAuthentication(x => x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme)
+                .AddOpenIdConnect(x =>
+                {
+                    x.Authority = "http://identity";
+                    x.
+                    
+                    x.ConfigurationManager =new ConfigurationManager<OpenIdConnectConfiguration>("http://",
+                        new OpenIdConnectConfigurationRetriever(),
+                        new HttpDocumentRetriever(new HttpClient(handler, false)));
+                })
+                .AddJwtBearer(x =>
+                {
+                    x.Audience
+                    x.ConfigurationManager = new ConfigurationManager<OpenIdConnectConfiguration>("http://",
+                        new OpenIdConnectConfigurationRetriever(),
+                        new HttpDocumentRetriever(new HttpClient(handler, false)));
+                });
+//            services.AddAuthentication("Bearer")
+//                                .AddIdentityServerAuthentication(x =>
+//                                {
+//                                    x.ApiName = "api1";
+//                                    x.Authority = urls[0].Uri.AbsoluteUri;
+//                                    x.ApiSecret = "secret";
+//                                    x.RequireHttpsMetadata = false;
+//                                    x.JwtBackChannelHandler = handler;
+//                                    
+//                                }
+//                )
+//                ;
             services.AddMvc();
         }
 
