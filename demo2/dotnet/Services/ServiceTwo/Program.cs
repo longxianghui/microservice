@@ -18,7 +18,7 @@ namespace ServiceTwo
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .UseApplicationInsights()
-                .UseUrls("http://*:8011")
+                .UseUrls("http://*:8013")
                 .Build();
 
             host.Run();

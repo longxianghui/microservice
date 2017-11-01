@@ -3,17 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Order", "Order\Order.csproj", "{8C5B18FF-32C1-47B9-8FE5-59EA1C9A09D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Order", "Order\Order.csproj", "{8C5B18FF-32C1-47B9-8FE5-59EA1C9A09D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity", "Identity\Identity.csproj", "{67F37000-FA89-4533-9869-6B43AEBC781E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity", "Identity\Identity.csproj", "{67F37000-FA89-4533-9869-6B43AEBC781E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{6AF1FB09-0C1C-4678-9F9D-B32F181E61FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{6AF1FB09-0C1C-4678-9F9D-B32F181E61FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Product", "Product\Product.csproj", "{A93F65DB-46E4-4883-A5AD-1C9C40A7ED9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product", "Product\Product.csproj", "{A93F65DB-46E4-4883-A5AD-1C9C40A7ED9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User", "User\User.csproj", "{913405C2-DB8D-4C85-AD4D-3BC454EE8964}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "User", "User\User.csproj", "{913405C2-DB8D-4C85-AD4D-3BC454EE8964}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer4.AccessTokenValidation", "IdentityServer4.AccessTokenValidation\IdentityServer4.AccessTokenValidation.csproj", "{B6CD2AD5-8E5D-433E-ADCB-9567D9D3CD6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer4.AccessTokenValidation", "IdentityServer4.AccessTokenValidation\IdentityServer4.AccessTokenValidation.csproj", "{B6CD2AD5-8E5D-433E-ADCB-9567D9D3CD6E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{9650E67C-B4C6-4874-8FE4-F0A406E308D4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityModel.AspNetCore.OAuth2Introspection", "IdentityModel.AspNetCore.OAuth2Introspection\IdentityModel.AspNetCore.OAuth2Introspection.csproj", "{334EA8E0-9C59-43BB-B030-1E3E96F108F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,9 +49,17 @@ Global
 		{B6CD2AD5-8E5D-433E-ADCB-9567D9D3CD6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6CD2AD5-8E5D-433E-ADCB-9567D9D3CD6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6CD2AD5-8E5D-433E-ADCB-9567D9D3CD6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{334EA8E0-9C59-43BB-B030-1E3E96F108F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{334EA8E0-9C59-43BB-B030-1E3E96F108F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{334EA8E0-9C59-43BB-B030-1E3E96F108F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{334EA8E0-9C59-43BB-B030-1E3E96F108F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B6CD2AD5-8E5D-433E-ADCB-9567D9D3CD6E} = {9650E67C-B4C6-4874-8FE4-F0A406E308D4}
+		{334EA8E0-9C59-43BB-B030-1E3E96F108F9} = {9650E67C-B4C6-4874-8FE4-F0A406E308D4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {70E8C500-971B-48B2-AC85-808BA6DC9256}

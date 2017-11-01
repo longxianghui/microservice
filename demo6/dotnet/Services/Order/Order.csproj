@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\IdentityModel.AspNetCore.OAuth2Introspection\IdentityModel.AspNetCore.OAuth2Introspection.csproj" />
     <ProjectReference Include="..\IdentityServer4.AccessTokenValidation\IdentityServer4.AccessTokenValidation.csproj" />
   </ItemGroup>
 </Project>

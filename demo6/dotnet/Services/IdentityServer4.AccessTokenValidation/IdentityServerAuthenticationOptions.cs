@@ -164,7 +164,7 @@ namespace IdentityServer4.AccessTokenValidation
             {
                 var parsedUrl = DiscoveryClient.ParseUrl(Authority);
 
-                var httpClient = new HttpClient(JwtBackChannelHandler ?? new HttpClientHandler(), false)
+                var httpClient = new HttpClient(JwtBackChannelHandler ?? new HttpClientHandler())
                 {
                     Timeout = BackChannelTimeouts,
                     MaxResponseContentBufferSize = 1024 * 1024 * 10 // 10 MB

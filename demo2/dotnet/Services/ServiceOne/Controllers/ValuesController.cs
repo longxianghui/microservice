@@ -13,7 +13,7 @@ namespace ServiceOne.Controllers
     public class ValuesController : Controller
     {
         private readonly DiscoveryHttpClientHandler _handler;
-        private const string ProductUrl = "http://product/api/values";
+        private const string ProductUrl = "http://two/api/values";
 
         public ValuesController(IDiscoveryClient client, ILoggerFactory logFactory)
         {
@@ -23,7 +23,7 @@ namespace ServiceOne.Controllers
         [HttpGet("product")]
         public async Task<string> GoServiceTwoAsync()
         {
-            var client = new HttpClient(_handler, false);
+            var client = new HttpClient(_handler);
             return await client.GetStringAsync(ProductUrl);
         }
     }

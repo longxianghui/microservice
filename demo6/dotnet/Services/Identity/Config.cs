@@ -70,7 +70,8 @@ namespace Identity
                     {
                         "api1"
                     },
-                    AccessTokenType = AccessTokenType.Reference
+                    AccessTokenType =AccessTokenType.Reference
+                    //AccessTokenType = AccessTokenType.Reference
                 }
             };
         }

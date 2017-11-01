@@ -32,35 +32,34 @@ namespace Order
             var urls = discoveryClient.GetInstances("identity");
 
             services.AddAuthorization();
-            services.AddAuthentication(x => x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme)
-                .AddOpenIdConnect(x =>
-                {
-                    x.Authority = "http://identity";
-                    x.
-                    
-                    x.ConfigurationManager =new ConfigurationManager<OpenIdConnectConfiguration>("http://",
-                        new OpenIdConnectConfigurationRetriever(),
-                        new HttpDocumentRetriever(new HttpClient(handler, false)));
-                })
-                .AddJwtBearer(x =>
-                {
-                    x.Audience
-                    x.ConfigurationManager = new ConfigurationManager<OpenIdConnectConfiguration>("http://",
-                        new OpenIdConnectConfigurationRetriever(),
-                        new HttpDocumentRetriever(new HttpClient(handler, false)));
-                });
-//            services.AddAuthentication("Bearer")
-//                                .AddIdentityServerAuthentication(x =>
-//                                {
-//                                    x.ApiName = "api1";
-//                                    x.Authority = urls[0].Uri.AbsoluteUri;
-//                                    x.ApiSecret = "secret";
-//                                    x.RequireHttpsMetadata = false;
-//                                    x.JwtBackChannelHandler = handler;
-//                                    
-//                                }
-//                )
-//                ;
+            //services.AddAuthentication(x => x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme)
+            //    .AddOpenIdConnect(x =>
+            //    {
+            //        x.ConfigurationManager =new ConfigurationManager<OpenIdConnectConfiguration>("http://",
+            //            new OpenIdConnectConfigurationRetriever(),
+            //            new HttpDocumentRetriever(new HttpClient(handler, false)));
+            //    })
+            //    .AddJwtBearer(x =>
+            //    {
+            //        x.Audience = "";
+            //        x.ConfigurationManager = new ConfigurationManager<OpenIdConnectConfiguration>("http://",
+            //            new OpenIdConnectConfigurationRetriever(),
+            //            new HttpDocumentRetriever(new HttpClient(handler, false)));
+            //    });
+            //services.AddAuthentication("Bearer")
+            //                    .AddIdentityServerAuthentication(x =>
+            //                    {
+            //                        x.ApiName = "api1";
+            //                        x.Authority = urls[0].Uri.AbsoluteUri;
+            //                        x.ApiSecret = "secret";
+            //                        x.RequireHttpsMetadata = false;
+            //                        x.JwtBackChannelHandler = handler;
+
+            //                    }
+            //    )
+            //    ;
+            services.AddAuthentication(x=>x.DefaultAuthenticateScheme =JwtBearerDefaults.AuthenticationScheme)
+                .AddIdentityServerAuthentication()
             services.AddMvc();
         }
 
