@@ -13,7 +13,7 @@ namespace ServiceOne.Controllers
     public class ValuesController : Controller
     {
         private readonly DiscoveryHttpClientHandler _handler;
-        private const string ProductUrl = "http://two/api/values";
+        private const string ProductUrl = "http://product/api/values";
 
         public ValuesController(IDiscoveryClient client, ILoggerFactory logFactory)
         {

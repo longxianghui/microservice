@@ -18,7 +18,7 @@ namespace ServiceOne
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .UseApplicationInsights()
-                .UseUrls("http://*:8011")
+                .UseUrls("http://*:8010")
                 .Build();
 
             host.Run();
