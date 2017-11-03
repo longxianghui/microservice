@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityServer4;
 using IdentityServer4.Models;
 using Microsoft.Extensions.Configuration;
 
@@ -32,7 +33,8 @@ namespace Identity
             {
                 new ApiResource("api1", "My API")
                 {
-                    ApiSecrets = {new Secret("secret".Sha256())}
+                    ApiSecrets = {new Secret("secret".Sha256())},
+                    UserClaims = new List<string>{"role"}
                 }
             };
         }
@@ -41,37 +43,23 @@ namespace Identity
         public IEnumerable<Client> GetClients()
         {
             var accessTokenLifetime = int.Parse(_configuration.GetConnectionString("AccessTokenLifetime"));
-            // client credentials client
             return new List<Client>
             {
-                new Client
-                {
-                    ClientId = "client",
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    AccessTokenLifetime = accessTokenLifetime, //默认过期时间
-                    ClientSecrets =
-                    {
-                        new Secret("secret".Sha256())
-                    },
-                    AllowedScopes = {"api1"}
-                },
-                // resource owner password grant client
                 new Client
                 {
                     ClientId = "ro.client",
                     ClientSecrets =
                     {
-                        new Secret("secret".Sha256())
+                        new Secret("cb592770-f241-4079-8140-b7b7f2c2b132".Sha256())
                     },
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     AllowOfflineAccess = true,
-                    AccessTokenLifetime = accessTokenLifetime, //默认过期时间
+                    AccessTokenLifetime = accessTokenLifetime,
                     AllowedScopes =
                     {
                         "api1"
                     },
                     AccessTokenType =AccessTokenType.Reference
-                    //AccessTokenType = AccessTokenType.Reference
                 }
             };
         }

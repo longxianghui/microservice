@@ -10,6 +10,7 @@ namespace User.Models
         public string Name { get; set; }
         public string Password { get; set; }
         public int Id { get; set; }
+        public string Role { get; set; }
 
         public static List<Account> GetAll()
         {
@@ -17,15 +18,17 @@ namespace User.Models
             {
                 new Account()
                 {
-                    Id = 1,
+                    Id = 87654,
                     Name = "leo",
-                    Password = "123456"
+                    Password = "123456",
+                    Role = "admin"
                 },
                 new Account()
                 {
-                    Id = 2,
+                    Id = 45678,
                     Name = "mickey",
-                    Password = "123456"
+                    Password = "123456",
+                    Role = "normal"
                 }
             };
         }

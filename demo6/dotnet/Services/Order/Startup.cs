@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using IdentityModel.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,37 +30,38 @@ namespace Order
             services.AddDiscoveryClient(Configuration);
             var discoveryClient = services.BuildServiceProvider().GetService<IDiscoveryClient>();
             var handler = new DiscoveryHttpClientHandler(discoveryClient);
-            var urls = discoveryClient.GetInstances("identity");
-
             services.AddAuthorization();
-            //services.AddAuthentication(x => x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme)
-            //    .AddOpenIdConnect(x =>
-            //    {
-            //        x.ConfigurationManager =new ConfigurationManager<OpenIdConnectConfiguration>("http://",
-            //            new OpenIdConnectConfigurationRetriever(),
-            //            new HttpDocumentRetriever(new HttpClient(handler, false)));
-            //    })
-            //    .AddJwtBearer(x =>
-            //    {
-            //        x.Audience = "";
-            //        x.ConfigurationManager = new ConfigurationManager<OpenIdConnectConfiguration>("http://",
-            //            new OpenIdConnectConfigurationRetriever(),
-            //            new HttpDocumentRetriever(new HttpClient(handler, false)));
-            //    });
-            //services.AddAuthentication("Bearer")
-            //                    .AddIdentityServerAuthentication(x =>
-            //                    {
-            //                        x.ApiName = "api1";
-            //                        x.Authority = urls[0].Uri.AbsoluteUri;
-            //                        x.ApiSecret = "secret";
-            //                        x.RequireHttpsMetadata = false;
-            //                        x.JwtBackChannelHandler = handler;
 
-            //                    }
-            //    )
-            //    ;
-            services.AddAuthentication(x=>x.DefaultAuthenticateScheme =JwtBearerDefaults.AuthenticationScheme)
-                .AddIdentityServerAuthentication()
+
+            services.AddAuthentication(x =>
+                {
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+
+                .AddIdentityServerAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme,
+                //jwt settings
+                o =>
+                {
+                    o.Authority = "http://identity";
+                    o.Audience = "api1";
+                    o.BackchannelHttpHandler = handler;//use discovery service
+                    o.RequireHttpsMetadata = false;//dev not use https
+                },
+                //openId connet settings
+                x =>
+                {
+                    x.Authority = "http://identity";
+                    x.ClientId = "api1";
+                    x.ClientSecret = "fsdafasdfasdsdfasecret";
+                    x.DiscoveryHttpHandler = handler;//use discovery service
+                    x.DiscoveryPolicy = new DiscoveryPolicy()
+                    {
+                        ValidateIssuerName = false,
+                        ValidateEndpoints = false,
+                        RequireHttps = false
+                    };
+                });
             services.AddMvc();
         }
 

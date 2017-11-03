@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Common;
+using IdentityModel;
 using IdentityServer4.Validation;
 using Pivotal.Discovery.Client;
 
@@ -20,23 +22,19 @@ namespace Identity
             _handler = new DiscoveryHttpClientHandler(client);
         }
 
-        public Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
+        public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
         {
             //调用用户中心的验证用户名密码接口
-            var client = new HttpClient(_handler, false);
+            var client = new HttpClient(_handler);
             var url = $"http://{UserApplicationName}/search?name={context.UserName}&password={context.Password}";
-            var result = client.GetAsync(url).Result;
+            var result = await client.GetAsync(url);
             if (result.IsSuccessStatusCode)
             {
-                var user = result.Content.ReadAsObjectAsync<dynamic>().Result;
-                context.Result = new GrantValidationResult(user.id.ToString(), "password");
+                var user = await result.Content.ReadAsObjectAsync<dynamic>();
+                var claims = new List<Claim>() { new Claim("role", user.role.ToString()) };
+                var subject = user.id.ToString();
+                context.Result = new GrantValidationResult(subject, OidcConstants.AuthenticationMethods.Password, claims);
             }
-            else
-            {
-                context.Result = new GrantValidationResult(null);
-            }
-           
-            return Task.FromResult(0);
         }
     }
 }

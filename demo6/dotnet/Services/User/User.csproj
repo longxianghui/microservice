@@ -12,5 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
+    <!--<ProjectReference Include="..\IdentityModel\IdentityModel.csproj" />-->
   </ItemGroup>
 </Project>

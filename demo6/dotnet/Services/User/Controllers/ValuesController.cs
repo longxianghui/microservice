@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pivotal.Discovery.Client;
 using User.Models;
 using IdentityModel.Client;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 
 namespace User.Controllers
@@ -16,12 +18,13 @@ namespace User.Controllers
     {
         private const string IdentityApplicationName = "identity";
         private readonly DiscoveryHttpClientHandler _handler;
+        private readonly IConfiguration _configuration;
 
-        public ValuesController(IDiscoveryClient client)
+        public ValuesController(IDiscoveryClient client, IConfiguration configuration)
         {
+            _configuration = configuration;
             _handler = new DiscoveryHttpClientHandler(client);
         }
-
         [HttpGet("search")]
         public IActionResult Get(string name, string password)
         {
@@ -35,50 +38,33 @@ namespace User.Controllers
                 return NotFound();
             }
         }
-
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest input)
         {
-            //因为是做API的授权，clientid和clientSecret可以默认
-            var url = $"http://{IdentityApplicationName}/connect/token";
-            var client = new HttpClient(_handler, false);
-            var request = new HttpRequestMessage(HttpMethod.Post, url);
-            var form = new Dictionary<string, string>
+            var discoveryClient = new DiscoveryClient($"http://{IdentityApplicationName}", _handler)
             {
-                {"grant_type", "password"},
-                {"scope", "api1 offline_access"},
-                {"username", input.Name},
-                {"password", input.Password}
+                Policy = new DiscoveryPolicy { RequireHttps = false, ValidateIssuerName = false, ValidateEndpoints = false }
             };
-            request.Content = new FormUrlEncodedContent(form);
-            request.Headers.Authorization = new BasicAuthenticationHeaderValue("ro.client", "secret");
-            var response = await client.SendAsync(request).ConfigureAwait(false);
-            if (response.IsSuccessStatusCode)
-            {
-                var result = await response.Content.ReadAsObjectAsync<dynamic>();
-                return Ok(new LoginResponse()
-                {
-                    AccessToken= result.access_token,
-                    RefreshToken = result.refresh_token,
-                    ExpireIn = result.expires_in
-                });
-            }
-            return NotFound();
-        }
+            var disco = await discoveryClient.GetAsync();
+            if (disco.IsError) throw new Exception(disco.Error);
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
-        {
-            var account = Account.GetAll().FirstOrDefault(x => x.Id == id);
-            if (account != null)
+            var clientId = _configuration.GetSection("IdentityServer:ClientId").Value;
+            if (string.IsNullOrEmpty(clientId)) throw new Exception("clientId is not value.");
+
+            var clientSecrets = _configuration.GetSection("IdentityServer:ClientSecrets").Value;
+            if (string.IsNullOrEmpty(clientSecrets)) throw new Exception("clientSecrets is not value.");
+
+            var tokenClient = new TokenClient(disco.TokenEndpoint, clientId, clientSecrets, _handler);
+
+            var response = await tokenClient.RequestResourceOwnerPasswordAsync(input.Name, input.Password, "api1 offline_access");
+            if (response.IsError) throw new Exception(response.Error);
+
+            return Ok(new LoginResponse()
             {
-                return Ok(account);
-            }
-            else
-            {
-                return NotFound();
-            }
+                AccessToken = response.AccessToken,
+                ExpireIn = response.ExpiresIn,
+                RefreshToken = response.RefreshToken
+            });
         }
     }
 }
