@@ -3,7 +3,7 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <!--<PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.1.0" />-->
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="Pivotal.Discovery.Client" Version="1.1.0" />
   </ItemGroup>
@@ -12,6 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
-    <ProjectReference Include="..\IdentityServer4.AccessTokenValidation\IdentityServer4.AccessTokenValidation.csproj" />
+    <!--<ProjectReference Include="..\IdentityServer4.AccessTokenValidation\IdentityServer4.AccessTokenValidation.csproj" />-->
   </ItemGroup>
 </Project>
