@@ -32,7 +32,11 @@ namespace Identity
             var redisconnectionString = Configuration.GetConnectionString("RedisConnectionString");
             var config = new Config(Configuration);
             services.AddMvc();
-            services.AddIdentityServer()
+            services.AddIdentityServer(x =>
+                {
+                    x.IssuerUri = "http://identity";
+                    x.PublicOrigin = "http://identity";
+                })
                 .AddDeveloperSigningCredential()
                 .AddInMemoryPersistedGrants()
                 .AddInMemoryApiResources(config.GetApiResources())
@@ -54,7 +58,7 @@ namespace Identity
             app.UseMvc();
             app.UseDiscoveryClient();
             app.UseIdentityServer();
-            
+
         }
     }
 }

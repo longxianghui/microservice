@@ -40,6 +40,5 @@ namespace Order.Controllers
         {
             return Ok(new { role = "allowAnonymous" });
         }
-
     }
 }

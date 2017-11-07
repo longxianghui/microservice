@@ -31,37 +31,21 @@ namespace Order
             var discoveryClient = services.BuildServiceProvider().GetService<IDiscoveryClient>();
             var handler = new DiscoveryHttpClientHandler(discoveryClient);
             services.AddAuthorization();
-
-
             services.AddAuthentication(x =>
                 {
-                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 })
-
-                .AddIdentityServerAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme,
-                //jwt settings
-                o =>
-                {
-                    o.Authority = "http://identity";
-                    o.Audience = "api1";
-                    o.BackchannelHttpHandler = handler;//use discovery service
-                    o.RequireHttpsMetadata = false;//dev not use https
-                },
-                //openId connet settings
-                x =>
-                {
-                    x.Authority = "http://identity";
-                    x.ClientId = "api1";
-                    x.ClientSecret = "fsdafasdfasdsdfasecret";
-                    x.DiscoveryHttpHandler = handler;//use discovery service
-                    x.DiscoveryPolicy = new DiscoveryPolicy()
-                    {
-                        ValidateIssuerName = false,
-                        ValidateEndpoints = false,
-                        RequireHttps = false
-                    };
-                });
+            .AddIdentityServerAuthentication(x =>
+             {
+                 x.ApiName = "api1";
+                 x.ApiSecret = "secret";
+                 x.Authority = "http://identity";
+                 x.RequireHttpsMetadata = false;
+                 x.JwtBackChannelHandler = handler;
+                 x.IntrospectionDiscoveryHandler = handler;
+                 x.IntrospectionBackChannelHandler = handler;
+             });
             services.AddMvc();
         }
 

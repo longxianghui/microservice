@@ -47,10 +47,10 @@ namespace Identity
             {
                 new Client
                 {
-                    ClientId = "ro.client",
+                    ClientId = "client.reference",
                     ClientSecrets =
                     {
-                        new Secret("cb592770-f241-4079-8140-b7b7f2c2b132".Sha256())
+                        new Secret("A30E6E57-086C-43BE-AF79-67ADECDA0A5B".Sha256())
                     },
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     AllowOfflineAccess = true,
@@ -59,7 +59,23 @@ namespace Identity
                     {
                         "api1"
                     },
-                    AccessTokenType =AccessTokenType.Reference
+                    AccessTokenType = AccessTokenType.Reference
+                },
+                new Client
+                {
+                    ClientId = "client.jwt",
+                    ClientSecrets =
+                    {
+                        new Secret("AB2DC090-0125-4FB8-902A-34AFB64B7D9B".Sha256())
+                    },
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                    AllowOfflineAccess = true,
+                    AccessTokenLifetime = accessTokenLifetime,
+                    AllowedScopes =
+                    {
+                        "api1"
+                    },
+                    AccessTokenType = AccessTokenType.Jwt
                 }
             };
         }

@@ -43,7 +43,7 @@ namespace User.Controllers
         {
             var discoveryClient = new DiscoveryClient($"http://{IdentityApplicationName}", _handler)
             {
-                Policy = new DiscoveryPolicy { RequireHttps = false, ValidateIssuerName = false, ValidateEndpoints = false }
+                Policy = new DiscoveryPolicy { RequireHttps = false }
             };
             var disco = await discoveryClient.GetAsync();
             if (disco.IsError) throw new Exception(disco.Error);
@@ -55,8 +55,8 @@ namespace User.Controllers
             if (string.IsNullOrEmpty(clientSecrets)) throw new Exception("clientSecrets is not value.");
 
             var tokenClient = new TokenClient(disco.TokenEndpoint, clientId, clientSecrets, _handler);
-
-            var response = await tokenClient.RequestResourceOwnerPasswordAsync(input.Name, input.Password, "api1 offline_access");
+            var response = await tokenClient.RequestResourceOwnerPasswordAsync(input.Name, input.Password, "api1");
+            //var response = await tokenClient.RequestResourceOwnerPasswordAsync(input.Name, input.Password, "api1 offline_access");
             if (response.IsError) throw new Exception(response.Error);
 
             return Ok(new LoginResponse()
